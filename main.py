@@ -1,6 +1,7 @@
 import os
 import sys
 import imageio.v2
+from os.path import exists
 
 from energy import compute_energy
 from seam_v2 import compute_vertical_seam_v2, visualize_seam_on_image
@@ -31,15 +32,16 @@ if __name__ == '__main__':
 
     print(f'Saving {output_filename}')
     resized_pixels = remove_n_lowest_seams_from_image(pixels, num_seams_to_remove, makeGif)
-    write_array_into_image(resized_pixels, output_filename)
+    write_array_into_image(resized_pixels, "output/" + output_filename)
     if makeGif:
-        images = []
-        filenames = os.listdir("output")
-        filenames.sort()
-        filenames.remove(output_filename)
-        for filename in filenames:
-            images.append(imageio.v2.imread("output/" + filename))
         gifName = "output/" + output_filename.replace(".jpg", "") + ".gif"
+        images = []
+        filenames = os.listdir("output/gifcache")
+        filenames.sort()
+        for filename in filenames:
+            print(filename)
+            images.append(imageio.v2.imread("output/gifcache/" + filename))
+
         imageio.mimsave(gifName, images)
         for filename in filenames:
-            os.remove("output/" + filename)
+            os.remove("output/gifcache/" + filename)

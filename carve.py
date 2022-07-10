@@ -51,7 +51,6 @@ def remove_n_lowest_seams_from_image(image, num_seams_to_remove, makeGif):
     `num_seams_to_remove` elements in each row, but will have the same number of
     rows.
     """
-
     for i in range(num_seams_to_remove):
         energy_map = compute_energy(image)
         seam_xs, energy = compute_vertical_seam_v2(energy_map)
@@ -59,5 +58,17 @@ def remove_n_lowest_seams_from_image(image, num_seams_to_remove, makeGif):
         print(f"{i + 1}/{num_seams_to_remove} seams removed")
         if makeGif:
             print(f'Making frame {i + 1}')
-            write_array_into_image(image, "output/" + str(i) + ".jpg")
+            write_array_into_image(image, "output/gifcache/" + numToBase26(i, 5) + ".jpg")
     return image
+
+
+def numToBase26(num, chars):
+    str = ""
+    while num > 0:
+        thisLetter = num % 26
+        str += chr(thisLetter + 65)
+        thisLetter -= thisLetter
+        num = int(num / 26)
+    for i in range(chars - len(str)):
+        str += "A"
+    return str[::-1]

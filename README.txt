@@ -17,4 +17,6 @@ or
 python3 main.py <input_name.png> <# of pixels to trim> <output_name.png> <make_into_gif (y/n)>
 If you want to choose whether to make the trimming process into a gif
 
+MAKE SURE TO PUT DIRECTORIES "input" AND "output" WITH FILES
+
 Output files will be in the output folder.
